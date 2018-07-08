@@ -1,42 +1,75 @@
 export class State {
-    public count: number = 0
     public message: string = ''
     public text: LinkedList = new LinkedList()
     public cursor: Node = null
+    public linkedList: LinkedList
+}
+
+export class OutputState {
+    public lineCount: number = 0
+    public linkedList: LinkedList
 }
 
 export class Node {
-    public value: string = null
+    public value: any = null
     public next: Node = null
+    public previous: Node = null
 
-    public constructor(value: string) {
+    public constructor(value: any, top: Node = null) {
         this.value = value
+        if(top) {
+            this.previous = top
+            this.previous.next = this
+        }
     }
 }
 
 export class LinkedList {
     public top: Node = null
+    public cur: Node = null
 
     public setTop(cur:Node) {
         this.top = cur
     }
 
-    public constructor(lines: string[] = []) {
-
+    public constructor(lines: any[] = []) {
         if(lines.length == 0) return; // if no lines
-        if(!this.top) this.setTop(new Node(lines[0])) // if no top
-        
-        let cur: Node = this.top
-
+        this.setTop(new Node(lines[0]))
+        this.cur = this.top
         for(let i:number = 1; i < lines.length; i++) {
-
-            const newNode = new Node(lines[i])
-            cur.next = newNode
-            cur = cur.next
+            const newNode = new Node(lines[i], this.cur)
+            this.cur = newNode
         }
     }
 
-    public getText(cur:Node = this.top): string {
+    public addElement(element: any) {
+        const newNode: Node = new Node(element, this.cur)
+        if(this.cur == null) {
+            this.top = newNode
+            this.cur = this.top
+            return
+        }
+        this.cur = newNode
+    }
+
+    public getTop(): Node {
+        return this.top
+    }
+
+    public getElement(list:Element[] = [], cur:Node = this.top): Element[] {
+        this.addElementToArray(list, 0, cur)
+        return list
+    }
+
+    private addElementToArray(list:Element[], index:number = 0, cur:Node = this.top):void {
+        if(!cur) return
+        list[index++] = cur.value
+        if(!cur.next) return
+        this.addElementToArray(list,index,cur.next)
+
+    }
+
+    public getText(cur:Node = this.top): any {
         if(!cur.next) return cur.value
         return cur.value + " " + this.getText(cur.next)
 

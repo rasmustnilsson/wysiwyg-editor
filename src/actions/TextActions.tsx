@@ -5,28 +5,18 @@ const setMessage = (state: State, message: string) => {
 }
 
 const saveMessage = (state: State) => {
-    state.text =  new LinkedList(state.message.split('\n'))
+    state.text = new LinkedList(state.message.split('\n'))
 }
 
-export const getTopAction = () => {
-    return {
-        type: 'GET_TOP'
-    }
-}
-
-export const setMessageAction = (value: string) => {
-    return {
+export const setMessageAction = (message: string) => ({
         payload: {
-            message: value,
+            message,
             setMessage,
         },
         type: 'SET_MESSAGE',
-    }
-}
+})
 
-export const saveMessageAction = () => {
-    return {
+export const saveMessageAction = () => ({
         payload: saveMessage,
         type: 'SAVE_MESSAGE'
-    }
-}
+})
