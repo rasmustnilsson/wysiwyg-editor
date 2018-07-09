@@ -4,17 +4,9 @@ import { State as StateClass, LinkedList } from '../tsClasses'
 
 interface Props {
     lines: LinkedList
-    textReducer: any
-    saveLinkedList(prop: LinkedList): any
-    logLinkedList(): any
 }
 
-interface State {
-    lines: string[]
-}
-
-export class Body extends React.Component<Props, State> {
-
+export class Body extends React.Component<Props> {
     getLineType(line: string): string {
         if(!line) return null
         if(line.length == 0) return 'LINE-BREAK'
