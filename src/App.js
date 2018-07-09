@@ -54,11 +54,11 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">To get started, edit <code>src/App.js</code> and save to reload.</p>
-        <div className="d-flex flex-column align-items-center">
-          <textarea rows="8" cols="100" onChange={ e => this.handleTextChange(e) } defaultValue={ this.props.textReducer.message }></textarea>
+        <div className="d-flex flex-column align-items-center container px-0">
+          <textarea className="form-control" rows="8" cols="100" onChange={ e => this.handleTextChange(e) } defaultValue={ this.props.textReducer.message }></textarea>
           <button className="btn btn-primary my-2" onClick={ this.saveMessage }>Save message</button>
         </div>
-        {/* <Body lines={ this.props.textReducer.text } /> */}
+        <Body lines={ this.props.textReducer.text } />
       </div>
     );
   }

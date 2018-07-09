@@ -1,8 +1,19 @@
 export class State {
     public message: string = ''
-    public text: LinkedList = new LinkedList()
+    public text: LinkedList = null
     public cursor: Node = null
     public linkedList: LinkedList
+
+    constructor() {
+        if(!localStorage.message) {
+            this.text = new LinkedList()
+            return
+        }
+        const message = JSON.parse(localStorage.message)
+        this.message = message.join('\n')
+        this.text = new LinkedList(message)
+    }
+
 }
 
 export class OutputState {

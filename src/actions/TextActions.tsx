@@ -2,6 +2,7 @@ import { State, LinkedList } from '../tsClasses'
 
 const setMessage = (state: State, message: string) => {
     state.message = message
+    localStorage.message = JSON.stringify(message.split('\n'))
 }
 
 const saveMessage = (state: State) => {

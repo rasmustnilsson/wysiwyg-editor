@@ -15,10 +15,6 @@ interface State {
 
 export class Body extends React.Component<Props, State> {
 
-    componentWillReceiveProps(nextProps: Props): void {
-        console.log(nextProps)
-    }
-
     getLineType(line: string): string {
         if(!line) return null
         if(line.length == 0) return 'LINE-BREAK'
@@ -31,7 +27,7 @@ export class Body extends React.Component<Props, State> {
         let cur = this.props.lines.top
         let i:number = 0
         if(!cur || !cur.value) return <pre>No text</pre>
-        while(cur.next) {
+        while(cur) {
             let line = cur.value
             const lineType = this.getLineType(line)
             let subIndex:number
@@ -97,4 +93,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 })
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Body);
+export default connect(mapStateToProps, mapDispatchToProps)(Body);
