@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { setMessage, saveMessage } from './actions/TextActions'
+import { setMessage, compileText } from './actions/TextActions'
 import { State, LinkedList } from './tsClasses'
 
 import Body from './components/Body'
@@ -8,7 +8,7 @@ import Body from './components/Body'
 import './App.css';
 
 interface Props {
-  saveMessage(): void
+  compileText(): void
   setMessage(message: string): void
   textReducer?: {
     text?: LinkedList,
@@ -22,19 +22,19 @@ class App extends React.Component<Props> {
     super(props)
     this.generateLines = this.generateLines.bind(this)
     this.handleTextChange = this.handleTextChange.bind(this)
-    this.saveMessage = this.saveMessage.bind(this)
+    this.compileText = this.compileText.bind(this)
     this.state = {
       lines: []
     }
   }
 
   componentWillMount() {
-    this.props.saveMessage()
-    this.generateLines()
+    this.compileText()
   }
 
-	saveMessage = (e: any) => {
-    this.props.saveMessage()
+  
+	compileText = () => {
+    this.props.compileText()
     this.generateLines()
   }
 
@@ -70,7 +70,7 @@ class App extends React.Component<Props> {
         </header>
         <div className="d-flex flex-column align-items-start container px-0 mt-2">
           <textarea className="form-control" id="inputTextArea" rows={8} onChange={ this.handleTextChange } defaultValue={ this.props.textReducer.message } />
-          <button className="btn btn-primary my-2 align-self-center" onClick={ this.saveMessage }>Force compile</button>
+          <button className="btn btn-primary my-2 align-self-center" onClick={ this.compileText }>Force compile</button>
         </div>
         <Body lines={ this.props.textReducer.text } />
       </div>
@@ -83,7 +83,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-	saveMessage: () => dispatch(saveMessage()),
+	compileText: () => dispatch(compileText()),
 	setMessage: (message: string) => dispatch(setMessage(message))
 })
 

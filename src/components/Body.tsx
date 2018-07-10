@@ -1,16 +1,25 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { State as StateClass, LinkedList } from '../tsClasses'
+import Line from './Line'
 
 interface Props {
     lines: LinkedList
 }
 
 export class Body extends React.Component<Props> {
+
+    /**
+     * outputs line type
+     * @param line 
+     */
     getLineType(line: string): string {
         if(!line) return null
+        // if object is empty break line
         if(line.length == 0) return 'LINE-BREAK'
+        // special case if its a ordered list
         if(parseInt(line.charAt(0)) && line.charAt(1) == '.' && line.charAt(2) == ' ') return 'ORDERED_LIST'
+        // returns string between index 0 and first space
         return line.substring(0,line.indexOf(' '))
     }
 
@@ -18,7 +27,7 @@ export class Body extends React.Component<Props> {
         const lines: LinkedList = new LinkedList()
         let cur = this.props.lines.top
         let i:number = 0
-        if(!cur || !cur.value) return <pre>No text</pre>
+        if(!cur || !cur.value) return <div className="container text-container border"><pre className="my-2">No text</pre></div>
         while(cur) {
             let line = cur.value
             const lineType = this.getLineType(line)
@@ -26,22 +35,23 @@ export class Body extends React.Component<Props> {
             let listItems: any[] = []
             switch(lineType) {
                 case '#':
-                    lines.addElement(<h1 key={i++}>{line.substring(1)}</h1>)
+                    lines.addElement(<h1 key={i++}><Line line={ line.substring(1) } /></h1>)
                     break
     
                 case '##':
-                    lines.addElement(<h2 key={i++}>{line.substring(2)}</h2>)
+                    lines.addElement(<h2 key={i++}><Line line={ line.substring(2) } /></h2>)
                     break
     
                 case '###':
-                    lines.addElement(<h3 key={i++}>{line.substring(3)}</h3>)
+                    lines.addElement(<h3 key={i++}><Line line={ line.substring(3) } /></h3>)
                     break
                     
                 case '*':
                     listItems = []
                     subIndex = 0
                     while(this.getLineType(line) == '*') {
-                        listItems.push(<li key={ i + '_' + subIndex++ }>{ line.substring(1) }</li>)
+                        listItems.push(<li key={ i + '_' + subIndex++ }><Line line={ line.substring(1) } /></li>)
+                        if(!cur.next || this.getLineType(cur.next.value) != '*') break
                         cur = cur.next
                         line = cur.value
                     }
@@ -52,7 +62,8 @@ export class Body extends React.Component<Props> {
                     listItems = []
                     subIndex = 0
                     while(this.getLineType(line) == 'ORDERED_LIST') {
-                        listItems.push(<li key={ i + '_' + subIndex++ }>{ line.substring(2) }</li>)
+                        listItems.push(<li key={ i + '_' + subIndex++ }><Line line={ line.substring(2) } /></li>)
+                        if(this.getLineType(cur.next.value) != '*') break
                         cur = cur.next
                         line = cur.value
                     }
@@ -64,7 +75,7 @@ export class Body extends React.Component<Props> {
                     break
                 
                 default:
-                    lines.addElement(<p className='m-0' key={i++}>{line}</p>)
+                    lines.addElement(<p className='m-0' key={i++}><Line line={ line } /></p>)
                     break
             }
             cur = cur.next 

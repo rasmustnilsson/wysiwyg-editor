@@ -33,7 +33,7 @@ export const setMessage = (message: string) => {
     }
 }
 
-export const saveMessage = () => {
+export const compileText = () => {
     return (dispatch: any, getState: any) => {
         dispatch(saveMessageAction(getState().textReducer.message))
     }
