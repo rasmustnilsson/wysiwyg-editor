@@ -1,12 +1,12 @@
 export class State {
-    public message: string = ''
+    public message: string = '# Hello\nWelcome to https://wysiwyg-editor.herokuapp.com/\nMade by: Rasmus Nilsson'
     public text: LinkedList = null
     public cursor: Node = null
     public linkedList: LinkedList
 
     constructor() {
         if(!localStorage.message) {
-            this.text = new LinkedList()
+            this.text = new LinkedList(this.message.split('\n'))
             return
         }
         const message = JSON.parse(localStorage.message)

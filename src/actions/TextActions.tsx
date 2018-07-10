@@ -1,40 +1,35 @@
 import { State, LinkedList } from '../tsClasses'
 
-const saveLinkedListInState = (state: State) => {
+const textToLinkedList = (state: State) => {
     state.text = new LinkedList(state.message.split('\n'))
 }
 
-const saveMessageInState = (state: State, message: string) => {
+const saveTextInState = (state: State, message: string) => {
     state.message = message
+    console.log(JSON.stringify(message))
     localStorage.message = JSON.stringify(message.split('\n'))
 }
 
-const setMessageAction = (message: string) => {
+const setTextAction = (message: string) => {
     return {
         payload: {
             message,
-            setMessage: saveMessageInState
+            setMessage: saveTextInState
         },
         type: 'SET_MESSAGE',
-    };
-}
-
-const saveMessageAction = (message: string) => {
-    return {
-        payload: saveLinkedListInState,
-        type: 'SAVE_MESSAGE'
-    };
-}
-
-export const setMessage = (message: string) => {
-    return (dispatch: any, getState: any) => {
-        dispatch(setMessageAction(message))
-        dispatch(saveMessageAction(getState().textReducer.message))
     }
 }
 
-export const compileText = () => {
+const textToLinkedListAction = (message: string) => {
+    return {
+        payload: textToLinkedList,
+        type: 'SAVE_MESSAGE'
+    }
+}
+
+export const setText = (message: string) => {
     return (dispatch: any, getState: any) => {
-        dispatch(saveMessageAction(getState().textReducer.message))
+        dispatch(setTextAction(message))
+        dispatch(textToLinkedListAction(getState().textReducer.message))
     }
 }

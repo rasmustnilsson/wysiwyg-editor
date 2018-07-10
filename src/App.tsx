@@ -1,6 +1,6 @@
-import * as React from 'react'
+import  * as React from 'react'
 import { connect } from 'react-redux'
-import { setMessage, compileText } from './actions/TextActions'
+import { setText } from './actions/TextActions'
 import { State, LinkedList } from './tsClasses'
 
 import Body from './components/Body'
@@ -8,8 +8,7 @@ import Body from './components/Body'
 import './App.css';
 
 interface Props {
-  compileText(): void
-  setMessage(message: string): void
+  setText(message: string): void
   textReducer?: {
     text?: LinkedList,
     message?: string
@@ -22,24 +21,22 @@ class App extends React.Component<Props> {
     super(props)
     this.generateLines = this.generateLines.bind(this)
     this.handleTextChange = this.handleTextChange.bind(this)
-    this.compileText = this.compileText.bind(this)
     this.state = {
       lines: []
     }
   }
 
   componentWillMount() {
-    this.compileText()
-  }
-
-  
-	compileText = () => {
-    this.props.compileText()
     this.generateLines()
   }
 
-	handleTextChange(e: any) {
-    this.props.setMessage(e.target.value)
+  /**
+   * 
+   * @param e event from input
+   */
+	handleTextChange(e: React.FormEvent<HTMLTextAreaElement>) {
+    console.log(e.currentTarget.value)
+    this.props.setText(e.currentTarget.value)
     this.generateLines()
   }
   
@@ -60,7 +57,8 @@ class App extends React.Component<Props> {
       <div className="App">
         <header className="App-header">
           <div className="container px-0">
-            <p>Start with: </p>
+            <h1>WYSIWYG - Editor</h1>
+            <p>Style text with: </p>
             <ul className="list-group">
               <li className="list-group-item"><var>#, ##, ###</var> => for headers</li>
               <li className="list-group-item"><var>*</var> => for unordered lists</li>
@@ -68,9 +66,8 @@ class App extends React.Component<Props> {
             </ul>
           </div>
         </header>
-        <div className="d-flex flex-column align-items-start container px-0 mt-2">
-          <textarea className="form-control" id="inputTextArea" rows={8} onChange={ this.handleTextChange } defaultValue={ this.props.textReducer.message } />
-          <button className="btn btn-primary my-2 align-self-center" onClick={ this.compileText }>Force compile</button>
+        <div className="d-flex flex-column align-items-start container px-0 my-2">
+          <textarea className="form-control" id="inputTextArea" rows={10} onChange={ this.handleTextChange } defaultValue={ this.props.textReducer.message } />
         </div>
         <Body lines={ this.props.textReducer.text } />
       </div>
@@ -83,8 +80,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
-	compileText: () => dispatch(compileText()),
-	setMessage: (message: string) => dispatch(setMessage(message))
+	setText: (message: string) => dispatch(setText(message))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

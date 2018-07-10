@@ -11,7 +11,8 @@ export class Body extends React.Component<Props> {
 
     /**
      * outputs line type
-     * @param line 
+     * @param line
+     * @return type of line, ex: header, linebreak, list
      */
     getLineType(line: string): string {
         if(!line) return null
