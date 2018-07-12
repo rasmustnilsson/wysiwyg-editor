@@ -4,13 +4,12 @@ const textToLinkedList = (state: State) => {
     state.text = new LinkedList(state.message.split('\n'))
 }
 
-const saveTextInState = (state: State, message: string) => {
+export const saveTextInState = (state: State, message: string) => {
     state.message = message
-    console.log(JSON.stringify(message))
     localStorage.message = JSON.stringify(message.split('\n'))
 }
 
-const setTextAction = (message: string) => {
+export const setTextAction = (message: string) => {
     return {
         payload: {
             message,

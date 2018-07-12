@@ -36,15 +36,27 @@ export class Body extends React.Component<Props> {
             let listItems: any[] = []
             switch(lineType) {
                 case '#':
-                    lines.addElement(<h1 key={i++}><Line line={ line.substring(1) } /></h1>)
+                    lines.addElement(<h1 key={i++} className="border-bottom py-1 mb-3"><Line line={ line.substring(1) } /></h1>)
                     break
     
                 case '##':
-                    lines.addElement(<h2 key={i++}><Line line={ line.substring(2) } /></h2>)
+                    lines.addElement(<h2 key={i++} className="border-bottom py-1 mb-3"><Line line={ line.substring(2) } /></h2>)
                     break
     
                 case '###':
                     lines.addElement(<h3 key={i++}><Line line={ line.substring(3) } /></h3>)
+                    break
+
+                case '####':
+                    lines.addElement(<h4 key={i++}><Line line={ line.substring(4) } /></h4>)
+                    break
+
+                case '#####':
+                    lines.addElement(<h5 key={i++}><Line line={ line.substring(5) } /></h5>)
+                    break
+
+                case '######':
+                    lines.addElement(<h6 key={i++}><Line line={ line.substring(6) } /></h6>)
                     break
                     
                 case '*':
@@ -76,7 +88,7 @@ export class Body extends React.Component<Props> {
                     break
                 
                 default:
-                    lines.addElement(<p className='m-0' key={i++}><Line line={ line } /></p>)
+                    lines.addElement(<p key={i++}><Line line={ line } /></p>)
                     break
             }
             cur = cur.next 

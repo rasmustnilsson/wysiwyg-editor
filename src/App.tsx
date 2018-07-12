@@ -60,7 +60,7 @@ class App extends React.Component<Props> {
             <h1>WYSIWYG - Editor</h1>
             <p>Style text with: </p>
             <ul className="list-group">
-              <li className="list-group-item"><var>#, ##, ###</var> => for headers</li>
+              <li className="list-group-item"><var>#, ##, ###, ####, #####, ######</var> => for headers</li>
               <li className="list-group-item"><var>*</var> => for unordered lists</li>
               <li className="list-group-item"><var>1., 2. ...</var> => for ordered lists</li>
             </ul>
