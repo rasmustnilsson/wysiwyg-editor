@@ -1,8 +1,6 @@
 export class State {
     public message: string = '# Hello\nWelcome to https://wysiwyg-editor.herokuapp.com/\nMade by: Rasmus Nilsson'
     public text: LinkedList = null
-    public cursor: Node = null
-    public linkedList: LinkedList
 
     constructor() {
         if(!localStorage.message) {
@@ -16,9 +14,17 @@ export class State {
 
 }
 
-export class OutputState {
-    public lineCount: number = 0
-    public linkedList: LinkedList
+export class PageState {
+    public tipMenuVisible: boolean
+
+    constructor() {
+        if(!localStorage.PageState) {
+            this.tipMenuVisible = true
+        }
+        else this.tipMenuVisible = JSON.parse(localStorage.PageState).tipMenuVisible
+
+    }
+
 }
 
 export class Node {
