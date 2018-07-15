@@ -25,23 +25,23 @@ export default class Line extends React.Component<Props, {}> {
         if(OPENING_BOLD > -1 && CLOSNING_BOLD != OPENING_BOLD && (OPENING_BOLD < OPENING_ITALIC || OPENING_ITALIC == -1)) {
             
             //only runs if there is text before bold text
-            if(OPENING_BOLD != 0) parts.push(<React.Fragment>{this.parseStyle(line.substring(0,OPENING_BOLD))}</React.Fragment>)
+            if(OPENING_BOLD != 0) parts.push(<React.Fragment key="1">{this.parseStyle(line.substring(0,OPENING_BOLD))}</React.Fragment>)
             // adds bold text
-            parts.push(<strong >{this.parseStyle(line.substring(OPENING_BOLD + 1, CLOSNING_BOLD))}</strong>)
+            parts.push(<strong key="2">{this.parseStyle(line.substring(OPENING_BOLD + 1, CLOSNING_BOLD))}</strong>)
             // adds text after bold text
-            parts.push(<React.Fragment>{this.parseStyle(line.substring(CLOSNING_BOLD + 1))}</React.Fragment>)
+            parts.push(<React.Fragment key="3">{this.parseStyle(line.substring(CLOSNING_BOLD + 1))}</React.Fragment>)
 
         } else if(OPENING_ITALIC > - 1 && CLOSNING_ITALIC != OPENING_ITALIC) {
 
             //only runs if there is text before italic text
-            if(OPENING_ITALIC != 0) parts.push(<React.Fragment>{this.parseStyle(line.substring(0,OPENING_ITALIC))}</React.Fragment>)
+            if(OPENING_ITALIC != 0) parts.push(<React.Fragment key="1">{this.parseStyle(line.substring(0,OPENING_ITALIC))}</React.Fragment>)
             // adds italic text
-            parts.push(<em>{this.parseStyle(line.substring(OPENING_ITALIC + 2, CLOSNING_ITALIC) + ' ')}</em>)
+            parts.push(<em key="2">{this.parseStyle(line.substring(OPENING_ITALIC + 2, CLOSNING_ITALIC) + ' ')}</em>)
             // adds text after italic text
-            parts.push(<React.Fragment>{this.parseStyle(line.substring(CLOSNING_ITALIC + 2))}</React.Fragment>)
+            parts.push(<React.Fragment key="3">{this.parseStyle(line.substring(CLOSNING_ITALIC + 2))}</React.Fragment>)
 
         } else {
-            parts.push(<React.Fragment>{ this.parseLine(line) }</React.Fragment>)
+            parts.push(<React.Fragment key="1">{ this.parseLine(line) }</React.Fragment>)
         }
 
         return <React.Fragment>{ parts }</React.Fragment>
