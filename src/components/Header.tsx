@@ -24,15 +24,11 @@ export class Header extends React.Component<Props, {}> {
             <header className="App-header">
             <div className="container px-0">
               <h1 className="header">WYSIWYG - Editor</h1>
-              <p className="header">Style text with: </p>
               <div className="card">
                 <div className="card-header">
                   <ul className="nav nav-tabs card-header-tabs">
                     <li className="nav-item">
                       <a className="nav-link active" onClick={ this.toggleTipMenuAction } data-toggle="collapse" data-target="#headerTips" aria-expanded="false" aria-controls="headerTips">Hide tips</a>
-                    </li>
-                    <li className="nav-item">
-                      <div className="px-3 py-2" style={{margin: '1px'}}>Style text with: </div>
                     </li>
                   </ul>
                 </div>
